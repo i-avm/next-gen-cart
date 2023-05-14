@@ -1,0 +1,79 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read # to fetch code (actions/checkout)
+jobs:
+  Setup:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest] # windows-latest, macOS-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.5.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install
+        env:
+          SKIP_PREPARE: true
+      - run: pnpm run build
+        env:
+          PUBLISH: true
+      - name: Upload build assets
+        id: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-assets
+          path: |
+            index.*
+            compiler.*
+            ssr.*
+            action/
+            animate/
+            easing/
+            internal/
+            motion/
+            store/
+            transition/
+            types/
+  Lint:
+    needs: Setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.5.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: 'pnpm i && pnpm run lint'
+  Tests:
+    needs: Setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.5.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install
+        env:
+          SKIP_PREPARE: true
+      - run: npx playwright install
+      - run: pnpm run test
+        env:
+          CI: true

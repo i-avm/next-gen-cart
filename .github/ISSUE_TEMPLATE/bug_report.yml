@@ -1,5 +1,5 @@
 name: "\U0001F41E Bug report"
-description: Report an issue with Svelte
+description: Report an issue with 'next-gen-cart'
 labels: ['triage: bug']
 body:
   - type: markdown
@@ -45,6 +45,6 @@ body:
       options:
         - annoyance
         - blocking an upgrade
-        - blocking all usage of svelte
+        - blocking all usage of app
     validations:
       required: true

@@ -1,11 +1,11 @@
 name: 'Feature Request'
-description: Request a new Svelte feature
+description: Request a new feature
 labels: [enhancement]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to request this feature! If your feature request is complex or substantial enough to warrant in-depth discussion, maintainers may close the issue and ask you to open an [RFC](https://github.com/sveltejs/rfcs).
+        Thanks for taking the time to request this feature! If your feature request is complex or substantial enough to warrant in-depth discussion, maintainers may close the issue and ask you to open an [RFC].
   - type: textarea
     id: problem
     attributes:
@@ -35,8 +35,8 @@ body:
       label: Importance
       description: How important is this feature to you?
       options:
-        - nice to have
-        - would make my life easier
-        - i cannot use svelte without it
+        - Nice to have
+        - Would make my life easier
+        - I cannot use the App without it
     validations:
       required: true

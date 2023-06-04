@@ -1,6 +1,14 @@
 <script>
 	import { page } from '$app/stores';
 	import logo from '$lib/images/logo.png';
+
+	import QuickCart from '../components/cart/quick-cart.svelte';
+
+	let isCartOpen = false;
+
+	const onClickCart = () => {
+		isCartOpen = !isCartOpen;
+	};
 </script>
 
 <header>
@@ -21,6 +29,9 @@
 			<li aria-current={$page.url.pathname === '/contact' ? 'page' : undefined}>
 				<a href="/contact">Contact</a>
 			</li>
+			<li>
+				<a href="/" on:click={onClickCart}>Cart</a>
+			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
@@ -29,6 +40,10 @@
 
 	<div class="corner" />
 </header>
+
+{#if isCartOpen}
+	<QuickCart />
+{/if}
 
 <style>
 	header {
